@@ -1,0 +1,11 @@
+[package]
+name = "sio2-core"
+version = "0.1.0"
+edition = "2024"
+
+[features]
+alloc = []
+std = ["alloc"]
+
+[dependencies]
+thiserror = { workspace = true }

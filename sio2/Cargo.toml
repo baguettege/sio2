@@ -1,0 +1,17 @@
+[package]
+name = "sio2"
+version = "0.1.0"
+edition = "2024"
+
+[features]
+default = ["std"]
+alloc = [
+    "sio2-core/alloc",
+]
+std = [
+    "alloc",
+    "sio2-core/std",
+]
+
+[dependencies]
+sio2-core = { workspace = true }
