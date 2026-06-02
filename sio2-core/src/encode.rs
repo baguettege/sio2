@@ -34,8 +34,7 @@ mod error {
 ///     }
 ///
 ///     fn encode(&self, buf: &mut BufMut) {
-///         buf
-///             .encode(&self.x)
+///         buf.encode(&self.x)
 ///             .encode(&self.y);
 ///     }
 /// }
@@ -68,8 +67,7 @@ pub trait Encode {
 ///     }
 ///
 ///     fn encode(&self, buf: &mut BufMut) -> EncodeResult<()> {
-///         buf
-///             .encode(&self.x)?
+///         buf.encode(&self.x)? 
 ///             .encode(&self.y)?;
 ///         Ok(())
 ///     }
@@ -102,7 +100,7 @@ impl<'a> BufMut<'a> {
     /// Returns the number of bytes written to this buffer.
     #[inline]
     pub const fn len(&self) -> usize {
-        self.buf.len()
+        Vec::len(&self.buf)
     }
 
     /// Pushes `bytes` into this buffer.
