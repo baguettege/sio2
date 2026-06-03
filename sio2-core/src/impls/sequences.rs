@@ -60,6 +60,7 @@ impl_encode!(BTreeSet<E>);
 impl_encode!(BinaryHeap<E>);
 impl_encode!(#[cfg(feature = "std")] HashSet<E>);
 impl_encode!(#[cfg(feature = "indexmap")] IndexSet<E>);
+impl_encode!(#[cfg(feature = "hashbrown")] hashbrown::HashSet<E>);
 
 impl_decode!(Vec<D>);
 impl_decode!(VecDeque<D>);
@@ -68,3 +69,4 @@ impl_decode!(BTreeSet<D> where D: Ord);
 impl_decode!(BinaryHeap<D> where D: Ord);
 impl_decode!(#[cfg(feature = "std")] HashSet<D> where D: Hash + Eq);
 impl_decode!(#[cfg(feature = "indexmap")] IndexSet<D> where D: Hash + Eq);
+impl_decode!(#[cfg(feature = "hashbrown")] hashbrown::HashSet<D> where D: Hash + Eq);

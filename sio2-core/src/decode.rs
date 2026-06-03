@@ -2,6 +2,7 @@ pub use self::error::{DecodeError, DecodeResult};
 
 mod error {
     use core::str::Utf8Error;
+    use core::ffi::FromBytesWithNulError;
 
     #[cfg(feature = "alloc")]
     use alloc::boxed::Box;
@@ -31,6 +32,15 @@ mod error {
         /// A [`NonZero`](core::num::NonZero) value was `0`.
         #[error("non-zero value was `0`")]
         InvalidNonZero,
+
+        /// A [`CStr`](core::ffi::CStr) was not nul-terminated or contained an
+        /// interior nul byte.
+        #[error(transparent)]
+        InvalidCStr(#[from] FromBytesWithNulError),
+
+        /// An enum variant's discriminant was invalid.
+        #[error("invalid discriminant `{0}`")]
+        InvalidDiscriminant(u16),
 
         /// A custom, user-defined error.
         #[cfg(feature = "alloc")]
@@ -83,6 +93,7 @@ impl<'buf> Buf<'buf> {
     /// assert!(matches!(buf.take(2), Ok(&[1u8, 0u8])));
     /// assert!(matches!(buf.take(1), Err(DecodeError::UnexpectedEof)));
     /// ```
+    #[inline]
     pub const fn take(&mut self, n: usize) -> DecodeResult<&'buf [u8]> {
         match self.buf.split_at_checked(n) {
             None => Err(DecodeError::UnexpectedEof),

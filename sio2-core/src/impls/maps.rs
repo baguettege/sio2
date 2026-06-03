@@ -57,7 +57,9 @@ macro_rules! impl_decode {
 impl_encode!(BTreeMap<K, V>);
 impl_encode!(#[cfg(feature = "std")] HashMap<K, V>);
 impl_encode!(#[cfg(feature = "indexmap")] IndexMap<K, V>);
+impl_encode!(#[cfg(feature = "hashbrown")] hashbrown::HashMap<K, V>);
 
 impl_decode!(BTreeMap<K, V> where K: Ord);
 impl_decode!(#[cfg(feature = "std")] HashMap<K, V> where K: Hash + Eq);
 impl_decode!(#[cfg(feature = "indexmap")] IndexMap<K, V> where K: Hash + Eq);
+impl_decode!(#[cfg(feature = "hashbrown")] hashbrown::HashMap<K, V> where K: Hash + Eq);

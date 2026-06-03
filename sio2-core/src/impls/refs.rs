@@ -9,18 +9,22 @@ macro_rules! impl_ {
             where
                 E: Encode,
             {
+                #[inline]
                 fn len(&self) -> usize {
-                    E::len(*self)
+                    (**self).len()
                 }
 
                 #[cfg(feature = "alloc")]
+                #[inline]
                 fn encode(&self, buf: &mut BufMut) {
-                    E::encode(*self, buf)
+                    buf.encode(*self);
                 }
-                
+
                 #[cfg(not(feature = "alloc"))]
+                #[inline]
                 fn encode(&self, buf: &mut BufMut) -> EncodeResult<()> {
-                    E::encode(*self, buf)
+                    buf.encode(*self)?;
+                    Ok(())
                 }
             }
         )*

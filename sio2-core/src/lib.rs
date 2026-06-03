@@ -6,6 +6,7 @@ extern crate alloc;
 mod encode;
 mod decode;
 mod impls;
+mod bound;
 
 pub use encode::{Encode, BufMut};
 #[cfg(feature = "alloc")]
