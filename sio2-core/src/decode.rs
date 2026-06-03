@@ -28,6 +28,10 @@ mod error {
         #[error(transparent)]
         InvalidUtf8(#[from] Utf8Error),
 
+        /// A [`NonZero`](core::num::NonZero) value was `0`.
+        #[error("non-zero value was `0`")]
+        InvalidNonZero,
+
         /// A custom, user-defined error.
         #[cfg(feature = "alloc")]
         #[error(transparent)]
