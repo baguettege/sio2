@@ -2,26 +2,19 @@ use crate::{Encode, BufMut, Decode, Buf, DecodeResult};
 #[cfg(not(feature = "alloc"))]
 use crate::EncodeResult;
 
-#[cfg(feature = "alloc")]
 impl Encode for str {
     #[inline]
     fn len(&self) -> usize {
         Encode::len(&self.len()) + self.len()
     }
 
+    #[cfg(feature = "alloc")]
     #[inline]
     fn encode(&self, buf: &mut BufMut) {
         buf.encode(self.as_bytes());
     }
-}
 
-#[cfg(not(feature = "alloc"))]
-impl Encode for str {
-    #[inline]
-    fn len(&self) -> usize {
-        Encode::len(&self.len()) + self.len()
-    }
-
+    #[cfg(not(feature = "alloc"))]
     #[inline]
     fn encode(&self, buf: &mut BufMut) -> EncodeResult<()> {
         buf.encode(self.as_bytes())?;

@@ -1,7 +1,9 @@
 #![cfg(feature = "alloc")]
 
 use crate::{Encode, BufMut, Decode, Buf, DecodeResult};
-use alloc::collections::BTreeSet;
+
+use alloc::vec::Vec;
+use alloc::collections::{VecDeque, LinkedList, BinaryHeap, BTreeSet};
 
 #[cfg(any(feature = "std", feature = "indexmap"))]
 use core::hash::Hash;
@@ -10,7 +12,7 @@ use std::collections::HashSet;
 #[cfg(feature = "indexmap")]
 use indexmap::IndexSet;
 
-macro_rules! impl_encode_set {
+macro_rules! impl_encode {
     ($(#[$meta:meta])? $T:ty) => {
         $(#[$meta])?
         impl<E> Encode for $T
@@ -35,13 +37,13 @@ macro_rules! impl_encode_set {
     };
 }
 
-macro_rules! impl_decode_set {
-    ($(#[$meta:meta])? $T:ty where $($bound:tt)*) => {
+macro_rules! impl_decode {
+    ($(#[$meta:meta])? $T:ty $(where $($bound:tt)*)?) => {
         $(#[$meta])?
         impl<'buf, D> Decode<'buf> for $T
         where
             D: Decode<'buf>,
-            $($bound)*
+            $($($bound)*)?
         {
             fn decode(buf: &mut Buf<'buf>) -> DecodeResult<Self> {
                 let len: usize = buf.decode()?;
@@ -51,10 +53,18 @@ macro_rules! impl_decode_set {
     };
 }
 
-impl_encode_set!(BTreeSet<E>);
-impl_encode_set!(#[cfg(feature = "std")] HashSet<E>);
-impl_encode_set!(#[cfg(feature = "indexmap")] IndexSet<E>);
+impl_encode!(Vec<E>);
+impl_encode!(VecDeque<E>);
+impl_encode!(LinkedList<E>);
+impl_encode!(BTreeSet<E>);
+impl_encode!(BinaryHeap<E>);
+impl_encode!(#[cfg(feature = "std")] HashSet<E>);
+impl_encode!(#[cfg(feature = "indexmap")] IndexSet<E>);
 
-impl_decode_set!(BTreeSet<D> where D: Ord);
-impl_decode_set!(#[cfg(feature = "std")] HashSet<D> where D: Hash + Eq);
-impl_decode_set!(#[cfg(feature = "indexmap")] IndexSet<D> where D: Hash + Eq);
+impl_decode!(Vec<D>);
+impl_decode!(VecDeque<D>);
+impl_decode!(LinkedList<D>);
+impl_decode!(BTreeSet<D> where D: Ord);
+impl_decode!(BinaryHeap<D> where D: Ord);
+impl_decode!(#[cfg(feature = "std")] HashSet<D> where D: Hash + Eq);
+impl_decode!(#[cfg(feature = "indexmap")] IndexSet<D> where D: Hash + Eq);

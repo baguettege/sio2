@@ -5,17 +5,19 @@ use alloc::boxed::Box;
 use alloc::rc::Rc;
 use alloc::sync::Arc;
 
-macro_rules! impl_smart_ptr {
+macro_rules! impl_ {
     ($($T:ident),* $(,)?) => {
         $(
             impl<E> Encode for $T<E>
             where
                 E: Encode + ?Sized,
             {
+                #[inline]
                 fn len(&self) -> usize {
                     E::len(self.as_ref())
                 }
                 
+                #[inline]
                 fn encode(&self, buf: &mut BufMut) {
                     E::encode(self.as_ref(), buf)
                 }
@@ -33,4 +35,4 @@ macro_rules! impl_smart_ptr {
     };
 }
 
-impl_smart_ptr!(Box, Rc, Arc);
+impl_!(Box, Rc, Arc);

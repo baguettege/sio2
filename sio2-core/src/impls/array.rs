@@ -4,7 +4,6 @@ use crate::EncodeResult;
 
 use core::mem::MaybeUninit;
 
-#[cfg(feature = "alloc")]
 impl<const N: usize, E> Encode for [E; N]
 where
     E: Encode,
@@ -15,24 +14,14 @@ where
             .sum()
     }
 
+    #[cfg(feature = "alloc")]
     fn encode(&self, buf: &mut BufMut) {
         for item in self {
             buf.encode(item);
         }
     }
-}
 
-#[cfg(not(feature = "alloc"))]
-impl<const N: usize, E> Encode for [E; N]
-where
-    E: Encode,
-{
-    fn len(&self) -> usize {
-        self.iter()
-            .map(Encode::len)
-            .sum()
-    }
-
+    #[cfg(not(feature = "alloc"))]
     fn encode(&self, buf: &mut BufMut) -> EncodeResult<()> {
         for item in self {
             buf.encode(item)?;

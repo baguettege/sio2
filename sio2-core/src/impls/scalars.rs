@@ -2,26 +2,19 @@ use crate::{Encode, BufMut, Decode, Buf, DecodeResult, DecodeError};
 #[cfg(not(feature = "alloc"))]
 use crate::EncodeResult;
 
-#[cfg(feature = "alloc")]
 impl Encode for bool {
     #[inline]
     fn len(&self) -> usize {
         size_of::<u8>()
     }
 
+    #[cfg(feature = "alloc")]
     #[inline]
     fn encode(&self, buf: &mut BufMut) {
         buf.encode(&(*self as u8));
     }
-}
 
-#[cfg(not(feature = "alloc"))]
-impl Encode for bool {
-    #[inline]
-    fn len(&self) -> usize {
-        size_of::<u8>()
-    }
-
+    #[cfg(not(feature = "alloc"))]
     #[inline]
     fn encode(&self, buf: &mut BufMut) -> EncodeResult<()> {
         buf.encode(&(*self as u8))?;
@@ -39,26 +32,19 @@ impl Decode<'_> for bool {
     }
 }
 
-#[cfg(feature = "alloc")]
 impl Encode for char {
     #[inline]
     fn len(&self) -> usize {
         size_of::<u32>()
     }
 
+    #[cfg(feature = "alloc")]
     #[inline]
     fn encode(&self, buf: &mut BufMut) {
         buf.encode(&(*self as u32));
     }
-}
 
-#[cfg(not(feature = "alloc"))]
-impl Encode for char {
-    #[inline]
-    fn len(&self) -> usize {
-        size_of::<u32>()
-    }
-
+    #[cfg(not(feature = "alloc"))]
     #[inline]
     fn encode(&self, buf: &mut BufMut) -> EncodeResult<()> {
         buf.encode(&(*self as u32))?;

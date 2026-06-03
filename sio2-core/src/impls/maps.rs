@@ -10,7 +10,7 @@ use std::collections::HashMap;
 #[cfg(feature = "indexmap")]
 use indexmap::IndexMap;
 
-macro_rules! impl_encode_map {
+macro_rules! impl_encode {
     ($(#[$meta:meta])? $T:ty) => {
         $(#[$meta])?
         impl<K, V> Encode for $T
@@ -37,7 +37,7 @@ macro_rules! impl_encode_map {
     };
 }
 
-macro_rules! impl_decode_map {
+macro_rules! impl_decode {
     ($(#[$meta:meta])? $T:ty where $($bound:tt)*) => {
         $(#[$meta])?
         impl<'buf, K, V> Decode<'buf> for $T
@@ -54,10 +54,10 @@ macro_rules! impl_decode_map {
     };
 }
 
-impl_encode_map!(BTreeMap<K, V>);
-impl_encode_map!(#[cfg(feature = "std")] HashMap<K, V>);
-impl_encode_map!(#[cfg(feature = "indexmap")] IndexMap<K, V>);
+impl_encode!(BTreeMap<K, V>);
+impl_encode!(#[cfg(feature = "std")] HashMap<K, V>);
+impl_encode!(#[cfg(feature = "indexmap")] IndexMap<K, V>);
 
-impl_decode_map!(BTreeMap<K, V> where K: Ord);
-impl_decode_map!(#[cfg(feature = "std")] HashMap<K, V> where K: Hash + Eq);
-impl_decode_map!(#[cfg(feature = "indexmap")] IndexMap<K, V> where K: Hash + Eq);
+impl_decode!(BTreeMap<K, V> where K: Ord);
+impl_decode!(#[cfg(feature = "std")] HashMap<K, V> where K: Hash + Eq);
+impl_decode!(#[cfg(feature = "indexmap")] IndexMap<K, V> where K: Hash + Eq);

@@ -2,29 +2,22 @@ use crate::{Encode, BufMut, Decode, Buf, DecodeResult};
 #[cfg(not(feature = "alloc"))]
 use crate::EncodeResult;
 
-macro_rules! impl_number {
+macro_rules! impl_ {
     ($($T:ty),* $(,)?) => {
         $(
-            #[cfg(feature = "alloc")]
             impl Encode for $T {
                 #[inline]
                 fn len(&self) -> usize {
                     size_of::<Self>()
                 }
 
+                #[cfg(feature = "alloc")]
                 #[inline]
                 fn encode(&self, buf: &mut BufMut) {
                     buf.put(self.to_be_bytes());
                 }
-            }
-
-            #[cfg(not(feature = "alloc"))]
-            impl Encode for $T {
-                #[inline]
-                fn len(&self) -> usize {
-                    size_of::<Self>()
-                }
-
+                
+                #[cfg(not(feature = "alloc"))]
                 #[inline]
                 fn encode(&self, buf: &mut BufMut) -> EncodeResult<()> {
                     buf.put(self.to_be_bytes())?;
@@ -43,26 +36,19 @@ macro_rules! impl_number {
 
     ($($T:ty as $To:ty),* $(,)?) => {
         $(
-            #[cfg(feature = "alloc")]
             impl Encode for $T {
                 #[inline]
                 fn len(&self) -> usize {
                     size_of::<$To>()
                 }
 
+                #[cfg(feature = "alloc")]
                 #[inline]
                 fn encode(&self, buf: &mut BufMut) {
                     buf.encode(&(*self as $To));
                 }
-            }
-
-            #[cfg(not(feature = "alloc"))]
-            impl Encode for $T {
-                #[inline]
-                fn len(&self) -> usize {
-                    size_of::<$To>()
-                }
-
+                
+                #[cfg(not(feature = "alloc"))]
                 #[inline]
                 fn encode(&self, buf: &mut BufMut) -> EncodeResult<()> {
                     buf.encode(&(*self as $To))?;
@@ -80,11 +66,11 @@ macro_rules! impl_number {
     };
 }
 
-impl_number!(
+impl_!(
     u8, u16, u32, u64, u128,
     i8, i16, i32, i64, i128,
 );
-impl_number!(
+impl_!(
     usize as u64,
     isize as i64,
 );

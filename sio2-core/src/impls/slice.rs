@@ -7,7 +7,6 @@ use alloc::boxed::Box;
 #[cfg(feature = "alloc")]
 use alloc::vec::Vec;
 
-#[cfg(feature = "alloc")]
 impl<E> Encode for [E]
 where
     E: Encode,
@@ -18,25 +17,15 @@ where
             .sum()
     }
 
+    #[cfg(feature = "alloc")]
     fn encode(&self, buf: &mut BufMut) {
         buf.encode(&self.len());
         for item in self {
             buf.encode(item);
         }
     }
-}
 
-#[cfg(not(feature = "alloc"))]
-impl<E> Encode for [E]
-where
-    E: Encode,
-{
-    fn len(&self) -> usize {
-        self.iter()
-            .map(Encode::len)
-            .sum()
-    }
-
+    #[cfg(not(feature = "alloc"))]
     fn encode(&self, buf: &mut BufMut) -> EncodeResult<()> {
         buf.encode(&self.len())?;
         for item in self {

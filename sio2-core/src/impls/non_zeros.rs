@@ -8,29 +8,22 @@ use core::num::{
     NonZeroUsize, NonZeroIsize,
 };
 
-macro_rules! impl_non_zero {
+macro_rules! impl_ {
     ($($T:ty => $Int:ty),* $(,)?) => {
         $(
-            #[cfg(feature = "alloc")]
             impl Encode for $T {
                 #[inline]
                 fn len(&self) -> usize {
                     size_of::<$Int>()
                 }
 
+                #[cfg(feature = "alloc")]
                 #[inline]
                 fn encode(&self, buf: &mut BufMut) {
                     buf.encode(&self.get());
                 }
-            }
 
-            #[cfg(not(feature = "alloc"))]
-            impl Encode for $T {
-                #[inline]
-                fn len(&self) -> usize {
-                    size_of::<$Int>()
-                }
-
+                #[cfg(not(feature = "alloc"))]
                 #[inline]
                 fn encode(&self, buf: &mut BufMut) -> EncodeResult<()> {
                     buf.encode(&self.get())?;
@@ -48,7 +41,7 @@ macro_rules! impl_non_zero {
     };
 }
 
-impl_non_zero!(
+impl_!(
     NonZeroU8 => u8,
     NonZeroU16 => u16,
     NonZeroU32 => u32,
