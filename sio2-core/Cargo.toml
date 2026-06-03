@@ -6,6 +6,8 @@ edition = "2024"
 [features]
 alloc = []
 std = ["alloc"]
+indexmap = ["dep:indexmap", "alloc"]
 
 [dependencies]
 thiserror = { workspace = true }
+indexmap = { workspace = true, optional = true }

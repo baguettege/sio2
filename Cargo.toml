@@ -4,6 +4,7 @@ members = ["sio2","sio2-core"]
 
 [workspace.dependencies]
 thiserror = "2.0.18"
+indexmap = "2.14.0"
 
 sio2 = { path = "sio2" }
 sio2-core = { path = "sio2-core" }

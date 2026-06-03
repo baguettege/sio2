@@ -4,13 +4,17 @@ version = "0.1.0"
 edition = "2024"
 
 [features]
-default = []
+default = ["std"]
 alloc = [
     "sio2-core/alloc",
 ]
 std = [
     "alloc",
     "sio2-core/std",
+]
+indexmap = [
+    "alloc",
+    "sio2-core/indexmap",
 ]
 
 [dependencies]

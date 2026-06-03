@@ -4,3 +4,6 @@ mod slice;
 mod vec;
 mod array;
 mod refs;
+mod smart_ptrs;
+mod maps;
+mod sets;
