@@ -2,6 +2,9 @@
 name = "sio2-derive"
 version = "0.1.0"
 edition = "2024"
+description = "Proc macro derives for sio2"
+license = "MIT"
+repository = "https://github.com/baguettege/sio2"
 
 [lib]
 proc-macro = true

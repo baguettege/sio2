@@ -2,6 +2,9 @@
 name = "sio2-core"
 version = "0.1.0"
 edition = "2024"
+description = "Core traits and types for sio2"
+license = "MIT"
+repository = "https://github.com/baguettege/sio2"
 
 [features]
 alloc = []
@@ -10,10 +13,10 @@ indexmap = ["alloc", "dep:indexmap"]
 hashbrown = ["alloc", "dep:hashbrown"]
 
 [dependencies]
-thiserror = "2.0.18"
+thiserror = { workspace = true }
 
-indexmap = { version = "2.14.0", optional = true }
-hashbrown = { version = "0.17.1", optional = true }
+indexmap = { workspace = true, optional = true }
+hashbrown = { workspace = true, optional = true }
 
 [dev-dependencies]
 sio2 = { workspace = true }

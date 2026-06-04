@@ -8,9 +8,9 @@ members = [
 ]
 
 [workspace.dependencies]
-sio2 = { path = "sio2" }
-sio2-core = { path = "sio2-core" }
-sio2-derive = { path = "sio2-derive" }
+sio2 = { path = "sio2", version = "0.1.0" }
+sio2-core = { path = "sio2-core", version = "0.1.0" }
+sio2-derive = { path = "sio2-derive", version = "0.1.0" }
 
 thiserror = "2.0.18"
 indexmap = "2.14.0"

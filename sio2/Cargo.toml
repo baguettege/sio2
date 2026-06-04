@@ -2,6 +2,10 @@
 name = "sio2"
 version = "0.1.0"
 edition = "2024"
+description = "A deterministic, zero-copy binary serialization library"
+readme = "../README.md"
+license = "MIT"
+repository = "https://github.com/baguettege/sio2"
 
 [features]
 default = ["std"]

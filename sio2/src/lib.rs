@@ -1,5 +1,5 @@
-//! A deterministic, zero-copy binary serialization library with optional
-//! `alloc` and `std` support.
+//! A deterministic, zero-copy binary serialization library with optional `alloc`
+//! and `std` support.
 //!
 //! # Features
 //!
@@ -88,6 +88,10 @@
 //! `buf.decode::<&[u8]>()?.to_vec()` over `buf.decode::<Vec<u8>>()?`.
 //!
 //! Specialized fast-path proc macro attributes may be added in the future.
+//!
+//! # Endian-ness
+//!
+//! All implementations for numbers use big-endian.
 //!
 //! # [`Encode::len`]
 //!
