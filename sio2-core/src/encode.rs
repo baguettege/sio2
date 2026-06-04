@@ -20,6 +20,7 @@ mod error {
 /// # Examples
 ///
 /// ```
+/// # use sio2_core as sio2;
 /// use sio2::{Encode, BufMut};
 ///
 /// struct Point {
@@ -54,6 +55,7 @@ pub trait Encode {
 /// # Examples
 ///
 /// ```
+/// # use sio2_core as sio2;
 /// use sio2::{Encode, BufMut, EncodeResult};
 ///
 /// struct Point {
@@ -116,6 +118,7 @@ impl<'a> BufMut<'a> {
     /// # Examples
     ///
     /// ```
+    /// # use sio2_core as sio2;
     /// use sio2::BufMut;
     ///
     /// let mut bytes = Vec::new();
@@ -138,6 +141,7 @@ impl<'a> BufMut<'a> {
     /// # Examples
     ///
     /// ```
+    /// # use sio2_core as sio2;
     /// use sio2::BufMut;
     ///
     /// let mut bytes = Vec::new();
@@ -208,6 +212,7 @@ impl<'a> BufMut<'a> {
     /// # Examples
     ///
     /// ```
+    /// # use sio2_core as sio2;
     /// use sio2::{BufMut, Overflow};
     ///
     /// let mut bytes = [0u8; 8];
@@ -242,6 +247,7 @@ impl<'a> BufMut<'a> {
     /// # Examples
     ///
     /// ```
+    /// # use sio2_core as sio2;
     /// use sio2::{BufMut, Overflow};
     ///
     /// let mut bytes = [0u8; 8];
@@ -293,6 +299,7 @@ mod private {
 /// # Examples
 ///
 /// ```
+/// # use sio2_core as sio2;
 /// use sio2::VecExt;
 ///
 /// let mut buf: Vec<u8> = Vec::new();
@@ -344,6 +351,7 @@ impl VecExt for Vec<u8> {
 /// # Examples
 ///
 /// ```
+/// # use sio2_core as sio2;
 /// use sio2::ToBytes;
 ///
 /// assert_eq!(256u32.to_bytes(), vec![0, 0, 1, 0]);

@@ -17,6 +17,3 @@ thiserror = { workspace = true }
 
 indexmap = { workspace = true, optional = true }
 hashbrown = { workspace = true, optional = true }
-
-[dev-dependencies]
-sio2 = { workspace = true }

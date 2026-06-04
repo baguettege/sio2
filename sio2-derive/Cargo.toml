@@ -16,6 +16,3 @@ alloc = []
 proc-macro2 = "1.0.106"
 syn = "2.0.117"
 quote = "1.0.45"
-
-[dev-dependencies]
-sio2 = { workspace = true }

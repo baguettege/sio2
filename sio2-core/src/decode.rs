@@ -85,6 +85,7 @@ impl<'buf> Buf<'buf> {
     /// # Examples
     ///
     /// ```
+    /// # use sio2_core as sio2;
     /// use sio2::{Buf, DecodeResult, DecodeError};
     ///
     /// let mut buf = Buf::new(&[0u8, 0u8, 1u8, 0u8]);
@@ -112,6 +113,7 @@ impl<'buf> Buf<'buf> {
     /// # Examples
     ///
     /// ```
+    /// # use sio2_core as sio2;
     /// use sio2::{Buf, DecodeResult, DecodeError};
     ///
     /// let mut buf = Buf::new(&[1u8, 2u8, 3u8, 4u8]);
@@ -135,6 +137,7 @@ impl<'buf> Buf<'buf> {
     /// # Examples
     ///
     /// ```
+    /// # use sio2_core as sio2;
     /// use sio2::{Buf, DecodeError};
     ///
     /// let mut buf = Buf::new(&[0u8, 1u8, 2u8, 3u8, 4u8]);

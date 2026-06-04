@@ -9,7 +9,8 @@ mod decode;
 ///
 /// # Examples
 ///
-/// ```
+/// ```ignore
+/// # use sio2_derive as sio2;
 /// use sio2::{Encode, ToBytes};
 ///
 /// #[derive(Encode)]
@@ -27,7 +28,7 @@ mod decode;
 ///
 /// - `#[sio2(crate(...))]` overrides the crate path referenced by the generated implementation
 ///
-/// ```
+/// ```ignore
 /// use sio2 as silica;
 /// use silica::Encode;
 ///
@@ -47,7 +48,7 @@ pub fn encode(input: TokenStream) -> TokenStream {
 ///
 /// # Examples
 ///
-/// ```
+/// ```ignore
 /// use sio2::{Decode, Buf};
 ///
 /// #[derive(Decode)]
@@ -69,7 +70,7 @@ pub fn encode(input: TokenStream) -> TokenStream {
 /// - `#[sio2(borrow('...))]` sets the input-buffer lifetime used in the generated
 ///   `Decode<'...>` implementation to allow for decoded fields to borrow from the buffer
 ///
-/// ```
+/// ```ignore
 /// use sio2 as silica;
 /// use silica::Decode;
 ///
