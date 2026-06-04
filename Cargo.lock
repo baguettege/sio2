@@ -61,7 +61,7 @@ dependencies = [
 
 [[package]]
 name = "sio2"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "sio2-core",
  "sio2-derive",
