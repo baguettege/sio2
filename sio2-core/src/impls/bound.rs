@@ -31,7 +31,7 @@ where
     }
 
     #[cfg(not(feature = "alloc"))]
-    fn encode(&self, buf: &mut BufMut) -> crate::encode::error::EncodeResult<()> {
+    fn encode(&self, buf: &mut BufMut) -> EncodeResult<()> {
         match self {
             Included(v) => buf
                 .encode(&0u8)?
@@ -56,7 +56,7 @@ where
             0 => Ok(Included(buf.decode()?)),
             1 => Ok(Excluded(buf.decode()?)),
             2 => Ok(Unbounded),
-            d => Err(DecodeError::InvalidDiscriminant(d as u16)),
+            d => Err(DecodeError::InvalidDiscriminant(d)),
         }
     }
 }

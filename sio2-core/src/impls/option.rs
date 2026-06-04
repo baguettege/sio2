@@ -47,7 +47,7 @@ where
         match buf.decode::<u8>()? {
             0 => Ok(None),
             1 => Ok(Some(buf.decode::<D>()?)),
-            d => Err(DecodeError::InvalidDiscriminant(d as u16)),
+            d => Err(DecodeError::InvalidDiscriminant(d)),
         }
     }
 }

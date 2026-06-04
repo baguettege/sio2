@@ -20,7 +20,6 @@ mod error {
 /// # Examples
 ///
 /// ```
-/// # use sio2_core as sio2;
 /// use sio2::{Encode, BufMut};
 ///
 /// struct Point {
@@ -34,12 +33,14 @@ mod error {
 ///     }
 ///
 ///     fn encode(&self, buf: &mut BufMut) {
-///         buf.encode(&self.x)
+///         buf
+///             .encode(&self.x)
 ///             .encode(&self.y);
 ///     }
 /// }
 /// ```
 #[cfg(feature = "alloc")]
+#[allow(clippy::len_without_is_empty)]
 pub trait Encode {
     /// Returns the exact number of bytes that [`Self::encode`] will write.
     fn len(&self) -> usize;
@@ -53,7 +54,6 @@ pub trait Encode {
 /// # Examples
 ///
 /// ```
-/// # use sio2_core as sio2;
 /// use sio2::{Encode, BufMut, EncodeResult};
 ///
 /// struct Point {
@@ -67,13 +67,15 @@ pub trait Encode {
 ///     }
 ///
 ///     fn encode(&self, buf: &mut BufMut) -> EncodeResult<()> {
-///         buf.encode(&self.x)? 
+///         buf
+///             .encode(&self.x)?
 ///             .encode(&self.y)?;
 ///         Ok(())
 ///     }
 /// }
 /// ```
 #[cfg(not(feature = "alloc"))]
+#[allow(clippy::len_without_is_empty)]
 pub trait Encode {
     /// Returns the exact number of bytes that [`Self::encode`] will write.
     fn len(&self) -> usize;
@@ -100,7 +102,13 @@ impl<'a> BufMut<'a> {
     /// Returns the number of bytes written to this buffer.
     #[inline]
     pub const fn len(&self) -> usize {
-        Vec::len(&self.buf)
+        Vec::len(self.buf)
+    }
+
+    /// Returns `true` if no bytes have been written to this buffer.
+    #[inline]
+    pub const fn is_empty(&self) -> bool {
+        self.len() == 0
     }
 
     /// Pushes `bytes` into this buffer.
@@ -108,7 +116,6 @@ impl<'a> BufMut<'a> {
     /// # Examples
     ///
     /// ```
-    /// # use sio2_core as sio2;
     /// use sio2::BufMut;
     ///
     /// let mut bytes = Vec::new();
@@ -131,7 +138,6 @@ impl<'a> BufMut<'a> {
     /// # Examples
     ///
     /// ```
-    /// # use sio2_core as sio2;
     /// use sio2::BufMut;
     ///
     /// let mut bytes = Vec::new();
@@ -170,13 +176,19 @@ impl<'a> BufMut<'a> {
     /// Returns the capacity of this buffer.
     #[inline]
     pub const fn capacity(&self) -> usize {
-        self.buf.len()
+        <[u8]>::len(self.buf)
     }
 
     /// Returns the number of bytes written to this buffer.
     #[inline]
     pub const fn len(&self) -> usize {
         self.offset
+    }
+
+    /// Returns `true` if no bytes have been written to this buffer.
+    #[inline]
+    pub const fn is_empty(&self) -> bool {
+        self.len() == 0
     }
 
     /// Returns the remaining number of bytes that can be written to this buffer.
@@ -196,7 +208,6 @@ impl<'a> BufMut<'a> {
     /// # Examples
     ///
     /// ```
-    /// # use sio2_core as sio2;
     /// use sio2::{BufMut, Overflow};
     ///
     /// let mut bytes = [0u8; 8];
@@ -231,7 +242,6 @@ impl<'a> BufMut<'a> {
     /// # Examples
     ///
     /// ```
-    /// # use sio2_core as sio2;
     /// use sio2::{BufMut, Overflow};
     ///
     /// let mut bytes = [0u8; 8];
@@ -283,7 +293,6 @@ mod private {
 /// # Examples
 ///
 /// ```
-/// # use sio2_core as sio2;
 /// use sio2::VecExt;
 ///
 /// let mut buf: Vec<u8> = Vec::new();
@@ -335,7 +344,6 @@ impl VecExt for Vec<u8> {
 /// # Examples
 ///
 /// ```
-/// # use sio2_core as sio2;
 /// use sio2::ToBytes;
 ///
 /// assert_eq!(256u32.to_bytes(), vec![0, 0, 1, 0]);

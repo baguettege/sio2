@@ -1,11 +1,17 @@
 [workspace]
 resolver = "3"
-members = ["sio2","sio2-core"]
+members = [
+    "sio2",
+    "sio2-core",
+    "sio2-derive",
+    "sio2-playground",
+]
 
 [workspace.dependencies]
+sio2 = { path = "sio2" }
+sio2-core = { path = "sio2-core" }
+sio2-derive = { path = "sio2-derive" }
+
 thiserror = "2.0.18"
 indexmap = "2.14.0"
 hashbrown = "0.17.1"
-
-sio2 = { path = "sio2" }
-sio2-core = { path = "sio2-core" }

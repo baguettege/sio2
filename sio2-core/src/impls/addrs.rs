@@ -50,7 +50,8 @@ impl Encode for SocketAddrV4 {
 
     #[cfg(feature = "alloc")]
     fn encode(&self, buf: &mut BufMut) {
-        buf.encode(self.ip())
+        buf
+            .encode(self.ip())
             .encode(&self.port());
     }
 
@@ -82,7 +83,8 @@ impl Encode for SocketAddrV6 {
 
     #[cfg(feature = "alloc")]
     fn encode(&self, buf: &mut BufMut) {
-        buf.encode(self.ip())
+        buf
+            .encode(self.ip())
             .encode(&self.port())
             .encode(&self.flowinfo())
             .encode(&self.scope_id());

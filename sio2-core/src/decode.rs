@@ -40,7 +40,7 @@ mod error {
 
         /// An enum variant's discriminant was invalid.
         #[error("invalid discriminant `{0}`")]
-        InvalidDiscriminant(u16),
+        InvalidDiscriminant(u8),
 
         /// A custom, user-defined error.
         #[cfg(feature = "alloc")]
@@ -85,7 +85,6 @@ impl<'buf> Buf<'buf> {
     /// # Examples
     ///
     /// ```
-    /// # use sio2_core as sio2;
     /// use sio2::{Buf, DecodeResult, DecodeError};
     ///
     /// let mut buf = Buf::new(&[0u8, 0u8, 1u8, 0u8]);
@@ -113,7 +112,6 @@ impl<'buf> Buf<'buf> {
     /// # Examples
     ///
     /// ```
-    /// # use sio2_core as sio2;
     /// use sio2::{Buf, DecodeResult, DecodeError};
     ///
     /// let mut buf = Buf::new(&[1u8, 2u8, 3u8, 4u8]);
@@ -137,7 +135,6 @@ impl<'buf> Buf<'buf> {
     /// # Examples
     ///
     /// ```
-    /// # use sio2_core as sio2;
     /// use sio2::{Buf, DecodeError};
     ///
     /// let mut buf = Buf::new(&[0u8, 1u8, 2u8, 3u8, 4u8]);

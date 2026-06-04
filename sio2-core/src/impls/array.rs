@@ -41,18 +41,18 @@ where
         let mut array: [MaybeUninit<D>; N] = unsafe { MaybeUninit::uninit().assume_init() };
         let mut initialized: usize = 0;
 
-        for i in 0..N {
+        for slot in array.iter_mut() {
             match buf.decode::<D>() {
                 Ok(item) => {
-                    array[i].write(item);
+                    slot.write(item);
                     initialized += 1;
                 }
                 Err(e) => {
-                    for j in 0..initialized {
-                        // SAFETY: The item at index `j` has been initialized since
-                        // `j < initialized`, and `initialized` is only incremented
-                        // after a successful write.
-                        unsafe { array[j].assume_init_drop() }
+                    for slot in array.iter_mut().take(initialized) {
+                        // SAFETY: Only the first `initialized` slots have been written
+                        // to because `initialized` is only incremented after a successful
+                        // write, therefore `take(initialized)` visits only initialized slots.
+                        unsafe { slot.assume_init_drop() }
                     }
 
                     return Err(e);
@@ -60,8 +60,8 @@ where
             }
         }
 
-        // SAFETY: The loop initializes indices `0..N` and exits early on error,
-        // guaranteeing that all items in `array` are initialized.
+        // SAFETY: Reaching this point means the loop did not exit early, so all
+        // slots in `array` have been written and initialized.
         Ok(array.map(|item| unsafe { item.assume_init() }))
     }
 }

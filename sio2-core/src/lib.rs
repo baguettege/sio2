@@ -6,12 +6,11 @@ extern crate alloc;
 mod encode;
 mod decode;
 mod impls;
-mod bound;
 
-pub use encode::{Encode, BufMut};
+pub use encode::{BufMut, Encode};
 #[cfg(feature = "alloc")]
-pub use encode::{VecExt, ToBytes};
+pub use encode::{ToBytes, VecExt};
 #[cfg(not(feature = "alloc"))]
-pub use encode::{Overflow, EncodeResult};
+pub use encode::{EncodeResult, Overflow};
 
-pub use decode::{DecodeResult, DecodeError, Decode, Buf};
+pub use decode::{Buf, Decode, DecodeError, DecodeResult};

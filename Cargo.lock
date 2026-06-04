@@ -64,6 +64,7 @@ name = "sio2"
 version = "0.1.0"
 dependencies = [
  "sio2-core",
+ "sio2-derive",
 ]
 
 [[package]]
@@ -72,7 +73,25 @@ version = "0.1.0"
 dependencies = [
  "hashbrown",
  "indexmap",
+ "sio2",
  "thiserror",
+]
+
+[[package]]
+name = "sio2-derive"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "sio2",
+ "syn",
+]
+
+[[package]]
+name = "sio2-playground"
+version = "0.1.0"
+dependencies = [
+ "sio2",
 ]
 
 [[package]]

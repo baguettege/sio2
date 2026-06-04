@@ -7,7 +7,7 @@ macro_rules! impl_ {
         $(
             impl<E> Encode for $T
             where
-                E: Encode,
+                E: Encode + ?Sized,
             {
                 #[inline]
                 fn len(&self) -> usize {

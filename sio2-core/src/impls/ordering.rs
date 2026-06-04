@@ -22,7 +22,7 @@ impl Encode for Ordering {
 
     #[cfg(not(feature = "alloc"))]
     #[inline]
-    fn encode(&self, buf: &mut BufMut) -> crate::encode::error::EncodeResult<()> {
+    fn encode(&self, buf: &mut BufMut) -> EncodeResult<()> {
         buf.encode(&match self {
             Less => 0u8,
             Equal => 1u8,
@@ -40,7 +40,7 @@ impl Decode<'_> for Ordering {
             0 => Ok(Less),
             1 => Ok(Equal),
             2 => Ok(Greater),
-            d => Err(DecodeError::InvalidDiscriminant(d as u16)),
+            d => Err(DecodeError::InvalidDiscriminant(d)),
         }
     }
 }
