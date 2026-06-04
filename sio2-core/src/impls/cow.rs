@@ -5,7 +5,7 @@ use alloc::borrow::{Cow, ToOwned};
 
 impl<E> Encode for Cow<'_, E>
 where
-    E: Encode + ToOwned,
+    E: Encode + ToOwned + ?Sized,
 {
     #[inline]
     fn len(&self) -> usize {
@@ -20,7 +20,7 @@ where
 
 impl<'buf, D> Decode<'buf> for Cow<'buf, D>
 where
-    D: ToOwned,
+    D: ToOwned + ?Sized,
     &'buf D: Decode<'buf>,
 {
     #[inline]
